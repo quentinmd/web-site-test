@@ -22,6 +22,7 @@
             <a href="contact.html" class="active">Contact</a>
           </nav>
         </div>
+        <div class="nav-overlay"></div>
       </header>
 
     <section>
@@ -78,13 +79,62 @@
     </div>
     </footer>
     <script>
-    // Menu burger pour mobile
+// Menu burger pour mobile - VERSION AMÉLIORÉE
+  document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('.nav');
-    menuToggle.addEventListener('click', () => {
-        nav.classList.toggle('open');
-    });
-    </script>
+    const navOverlay = document.querySelector('.nav-overlay');
+    const body = document.body;
     
+    // Fonction pour ouvrir le menu
+    function openMenu() {
+      nav.classList.add('open');
+      navOverlay.classList.add('active');
+      body.style.overflow = 'hidden'; // Empêche le scroll de la page
+      menuToggle.innerHTML = '<i class="fas fa-times"></i>'; // Change l'icône
+    }
+    
+    // Fonction pour fermer le menu
+    function closeMenu() {
+      nav.classList.remove('open');
+      navOverlay.classList.remove('active');
+      body.style.overflow = ''; // Rétablit le scroll
+      menuToggle.innerHTML = '<i class="fas fa-bars"></i>'; // Remet l'icône burger
+    }
+    
+    // Toggle du menu au clic sur le bouton
+    menuToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (nav.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+    
+    // Fermer le menu en cliquant sur l'overlay
+    navOverlay.addEventListener('click', closeMenu);
+    
+    // Fermer le menu en cliquant sur un lien
+    const navLinks = nav.querySelectorAll('a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+    
+    // Fermer le menu avec la touche Escape
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+    
+    // Fermer le menu si on redimensionne vers desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768 && nav.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+  });
+    </script>
 </body>
 </html>
