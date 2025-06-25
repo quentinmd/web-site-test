@@ -121,8 +121,11 @@ header {
   display: none;
   background: none;
   border: none;
-  font-size: 2em;
+  font-size: 24px;
+  color: var(--color-principal);
   cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
 }
 
 /* Navigation */
@@ -541,32 +544,72 @@ footer {
     flex-direction: row;
     align-items: center;
     padding: 10px 16px;
+    justify-content: space-between;
   }
   
   .menu-toggle {
     display: block;
-    margin: 0;
-    padding: 5px;
-    align-self: center;
   }
   
   .nav {
-    flex-direction: column;
-    align-items: flex-start;
-    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
     background: var(--color-white);
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 100%;
-    box-shadow: var(--shadow-sm);
-    z-index: 100;
-    padding: 16px 0;
-    gap: 16px;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 80px 0 20px 0;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
   }
   
   .nav.open {
-    display: flex;
+    right: 0;
+  }
+  
+  .nav a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--color-principal);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+  
+  .nav a:hover {
+    background: #f8f9fa;
+    color: var(--color-secondaire);
+  }
+  
+  .nav a.active {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+    color: white;
+  }
+  
+  /* Overlay pour fermer le menu */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
   }
   
   /* Layout principal */
@@ -586,16 +629,46 @@ footer {
     height: 300px;
   }
   
-  .intro-overlay {
-    height: auto;
+  .hero-content h1 {
+    font-size: 2em;
+  }
+  
+  .hero-content p {
+    font-size: 1em;
+  }
+  
+  /* Section "Qui sommes-nous ?" sur tablette */
+  .about-enhanced {
     flex-direction: column;
+    gap: 20px;
+    align-items: center;
   }
   
-  .intro-content, .intro-prestations {
-    padding: 20px;
+  .about-profile {
+    min-width: auto;
+    max-width: 500px;
+    margin: 0 auto;
   }
   
-  /* Sections services */
+  .profile-image {
+    width: 70px;
+    height: 70px;
+  }
+  
+  /* Sections côte à côte sur tablette */
+  .dual-sections {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .expertise-section, .values-section {
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+  
+  /* Services */
   .service-section {
     width: 100%;
   }
@@ -606,7 +679,7 @@ footer {
     text-align: center;
   }
   
-  /* Sections cibles */
+  /* Target groups */
   .target-groups {
     gap: 20px;
   }
@@ -615,275 +688,204 @@ footer {
     padding: 20px 15px;
   }
   
-  /* Services et cartes */
-  .services {
-    margin: 0 !important;
-    padding: 30px 15px !important;
+  /* CTA sur tablette */
+  .cta-section {
+    padding: 25px 20px;
+    margin: 20px auto;
+    max-width: 600px;
   }
   
-  .services-list {
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
     gap: 15px;
-    margin: 15px 0;
   }
   
-  .service-card {
-    margin: 0 !important;
-  }
-  
-  .service-card:hover, .target-group:hover {
-    transform: none;
-    box-shadow: 0 3px 10px rgba(174, 104, 151, 0.15);
-  }
-  
-  /* Boutons CTA */
-  .cta, .cta-center {
-    margin-top: 20px;
-    margin-bottom: 0;
-  }
-  
-  .rdv-btn-container {
-    margin: 5px 0 25px 0;
-  }
-  
-  .rdv-btn {
-    width: 100%;
-    display: block;
-    text-align: center;
-    box-sizing: border-box;
+  .cta-buttons .btn {
+    width: 80%;
+    max-width: 300px;
   }
   
   /* Footer */
-  footer {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
   .footer-container {
     width: 100%;
     padding: 20px 4vw 12px 4vw;
-  }
-  
-  /* Uniformisation */
-  .services, .cibles {
-    margin: 15px 0;
-    padding: 25px 20px;
-  }
-  
-  .dual-sections {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .cta-section {
-    margin-top: 20px;
   }
 }
 
 /***** 11. RESPONSIVE - MOBILE (600px) *****/
 @media (max-width: 600px) {
   /* Reset de base */
-  body {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    overflow-x: hidden;
+  * {
+    box-sizing: border-box;
   }
   
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Menu burger */
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 80px 0 20px 0;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .nav.open {
+    right: 0;
+  }
+  
+  .nav a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--color-principal);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+  
+  .nav a:hover {
+    background: #f8f9fa;
+    color: var(--color-secondaire);
+  }
+  
+  .nav a.active {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+    color: white;
+  }
+  
+  /* Overlay */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Layout principal */
   main {
     padding: 0;
     margin: 0 15px;
     width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+    overflow-x: hidden;
+  }
+  
+  section {
+    margin: 20px auto;
+    padding: 20px 15px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
   
   /* Header */
-  header {
-    margin-top: 10px;
+  .header-container {
+    justify-content: space-between;
+    padding: 15px 20px;
+    overflow-x: hidden;
   }
   
-  /* Typographie */
-  h2 {
-    margin-bottom: 20px;
-    font-size: 1.4em;
-    width: 100%;
-    text-align: center;
+  .logo {
+    max-height: 50px;
   }
   
-  h2::after {
-    width: 40%;
-    height: 2px;
-    left: 30%;
-  }
-  
-  /* Sections */
-  section {
-    margin: 20px auto;
-    padding: 20px 5vw;
-    border-radius: 8px;
-  }
-  
-  /* Hero */
+  /* Hero banner */
   .hero-banner {
-    height: 400px;
+    height: 250px;
   }
   
   .hero-content h1 {
-    font-size: 2em;
+    font-size: 1.8em;
   }
   
-  .hero-text {
-    text-align: center;
-    margin-bottom: 18px;
-  }
-  
-  .hero-img img {
-    max-width: 90%;
-    margin: 0 auto;
-  }
-  
-  /* Services */
-  .services-list {
-    flex-direction: column;
-    gap: 10px;
-    padding: 0;
-  }
-  
-  .service-card {
-    flex: none;
-    min-width: 0;
-    padding: 15px 10px;
-    margin-bottom: 10px;
-    transform: none;
-    border-top-width: 2px;
-    border-radius: 6px;
-  }
-  
-  .service-card:hover {
-    transform: none;
-    border-left: 2px solid var(--color-secondaire);
-  }
-  
-  .service-card img {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 8px;
-  }
-  
-  /* Sections cibles */
-  .target-groups {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .target-group {
-    width: 100%;
-    min-width: 0;
-    flex: none;
-    padding: 18px 15px;
-    margin-bottom: 15px;
-  }
-  
-  .target-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 15px;
-  }
-  
-  .target-icon i {
-    font-size: 28px;
-  }
-  
-  /* Icônes */
-  .service-icon-container {
-    width: 50px;
-    height: 50px;
-    min-width: 50px;
-    margin-right: 15px;
-  }
-  
-  .service-icon-container i {
-    font-size: 22px;
-  }
-  
-  /* Boutons */
-  .btn {
-    padding: 10px 24px;
-    font-size: 1em;
-  }
-  
-  /* Footer */
-  footer {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .footer-container {
-    width: 100%;
-    padding: 18px 5vw 10px 5vw;
-  }
-  
-  .footer-logo-img {
-    height: 32px;
-  }
-  
-  .footer-contact, .footer-links {
-    width: 100%;
+  .hero-content p {
     font-size: 0.95em;
-    margin: 6px 0;
   }
   
-  /* Uniformisation des paddings */
-  .services, .cibles {
-    margin: 20px 0;
-    padding: 20px;
-    width: 100%;
-  }
-  
-  .services {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-  }
-  
-  .cibles {
-    padding: 20px 15px;
-  }
-  
-  /* Correction UNIQUEMENT pour mobile - les sections côte à côte */
-  .dual-sections {
-    flex-direction: column;
-    gap: 20px;
-    /* Garde le centrage automatique du main */
-  }
-  
-  .expertise-section, .values-section {
-    max-width: 100%;
-    padding: 25px 20px;
-  }
-  
-  /* Amélioration pour la section "Qui sommes-nous ?" sur mobile */
+  /* Section "Qui sommes-nous ?" sur mobile */
   .about-enhanced {
     flex-direction: column;
     gap: 20px;
+    text-align: center;
   }
   
   .about-profile {
-    min-width: auto;
     flex-direction: column;
     text-align: center;
     gap: 15px;
+    align-items: center;
+    min-width: auto;
+    margin: 0 auto;
+    padding: 20px 15px;
   }
   
-  .profile-image i {
-    font-size: 48px;
+  .profile-image {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px auto;
+  }
+  
+  .profile-info h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.95em;
+  }
+  
+  /* Sections côte à côte sur mobile */
+  .dual-sections {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .expertise-section, .values-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 15px;
   }
   
   .expertise-item-compact, .value-item-compact {
     flex-direction: column;
     text-align: center;
     gap: 10px;
+    padding: 15px 12px;
   }
   
   .expertise-icon-small, .value-icon-small {
@@ -896,9 +898,39 @@ footer {
     font-size: 16px;
   }
   
-  /* Correction pour la section CTA sur mobile - SANS AFFECTER LE DESKTOP */
+  .expertise-text h4, .value-text h4 {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  
+  .expertise-text p, .value-text p {
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+  
+  /* Services */
+  .services {
+    padding: 20px 15px;
+    overflow-x: hidden;
+  }
+  
+  .service-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 10px 0;
+    padding: 15px 10px;
+  }
+  
+  /* Target groups */
+  .target-group {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 15px;
+  }
+  
+  /* CTA */
   .cta-section {
-    margin: 20px auto;
+    padding: 20px 15px;
     text-align: center;
   }
   
@@ -913,31 +945,75 @@ footer {
     width: 85%;
     max-width: 240px;
     text-align: center;
-    box-sizing: border-box;
     padding: 12px 20px;
     font-size: 0.95em;
     margin: 0 auto;
     display: block;
-    min-height: 44px;
   }
   
-  /* S'assurer que le premier bouton a le bon style */
-  .cta-buttons .btn:first-child {
-    background-color: var(--color-principal);
+  /* Contact */
+  .contact-item {
+    padding: 12px;
+    gap: 12px;
   }
   
-  /* S'assurer que le bouton RDV a le bon style */
-  .cta-buttons .rdv-btn {
-    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+  .contact-item i {
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
   }
   
-  /* Supprime les transformations au survol sur mobile */
-  .cta-section .btn {
-    transform: none !important;
+  .contact-item span {
+    font-size: 1em;
   }
   
-  .cta-section .btn:hover {
-    transform: none !important;
+  /* Footer */
+  .footer-container {
+    padding: 18px 15px 10px 15px;
+  }
+}
+
+/* Très petits écrans */
+@media (max-width: 480px) {
+  main {
+    margin: 0 10px;
+    width: calc(100% - 20px);
+  }
+  
+  section {
+    padding: 15px 10px;
+  }
+  
+  .header-container {
+    padding: 10px 10px;
+  }
+  
+  .hero-banner {
+    height: 220px;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.6em;
+  }
+  
+  .profile-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .expertise-section, .values-section {
+    padding: 18px 12px;
+  }
+  
+  .cta-buttons .btn {
+    width: 90%;
+    max-width: 220px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+  
+  .footer-container {
+    padding: 15px 10px;
   }
 }
 
@@ -1185,5 +1261,734 @@ footer {
   
   .contact-item span {
     font-size: 1em;
+  }
+}
+
+/* Menu burger - Corrections */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--color-principal);
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1001;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Caché par défaut */
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 80px 0 20px 0;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .nav.open {
+    right: 0; /* Visible quand ouvert */
+  }
+  
+  .nav a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--color-principal);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .nav a:hover {
+    background: #f8f9fa;
+    color: var(--color-secondaire);
+  }
+  
+  .nav a.active {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+    color: white;
+  }
+  
+  /* Overlay pour fermer le menu */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Header sur mobile */
+  .header-container {
+    justify-content: space-between;
+    padding: 15px 20px;
+  }
+  
+  .logo {
+    max-height: 50px;
+  }
+
+}
+
+/***** 11. RESPONSIVE - TABLETTES (768px) *****/
+@media (max-width: 768px) and (min-width: 601px) {
+  /* Header et menu */
+  .header-container {
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 16px;
+    justify-content: space-between;
+  }
+  
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 80px 0 20px 0;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .nav.open {
+    right: 0;
+  }
+  
+  .nav a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--color-principal);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+  
+  .nav a:hover {
+    background: #f8f9fa;
+    color: var(--color-secondaire);
+  }
+  
+  .nav a.active {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+    color: white;
+  }
+  
+  /* Overlay pour fermer le menu */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Layout principal */
+  main {
+    padding: 0;
+    margin: 0 4vw;
+    width: calc(100% - 8vw);
+  }
+  
+  section {
+    padding: 25px 20px;
+    margin: 25px auto;
+  }
+  
+  /* Hero banner */
+  .hero-banner {
+    height: 300px;
+  }
+  
+  .hero-content h1 {
+    font-size: 2em;
+  }
+  
+  .hero-content p {
+    font-size: 1em;
+  }
+  
+  /* Section "Qui sommes-nous ?" sur tablette */
+  .about-enhanced {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .about-profile {
+    min-width: auto;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .profile-image {
+    width: 70px;
+    height: 70px;
+  }
+  
+  /* Sections côte à côte sur tablette */
+  .dual-sections {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .expertise-section, .values-section {
+    max-width: 100%;
+    padding: 25px 20px;
+  }
+  
+  /* Services */
+  .service-section {
+    width: 100%;
+  }
+  
+  .service-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Target groups */
+  .target-groups {
+    gap: 20px;
+  }
+  
+  .target-group {
+    padding: 20px 15px;
+  }
+  
+  /* CTA sur tablette */
+  .cta-section {
+    padding: 25px 20px;
+    margin: 20px auto;
+    max-width: 600px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .cta-buttons .btn {
+    width: 80%;
+    max-width: 300px;
+  }
+  
+  /* Footer */
+  .footer-container {
+    width: 100%;
+    padding: 20px 4vw 12px 4vw;
+  }
+}
+
+/***** 11. RESPONSIVE - MOBILE (600px) *****/
+@media (max-width: 600px) {
+  /* Reset de base */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Menu burger */
+  .menu-toggle {
+    display: block;
+  }
+  
+  .nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: var(--color-white);
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 80px 0 20px 0;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .nav.open {
+    right: 0;
+  }
+  
+  .nav a {
+    display: block;
+    padding: 15px 30px;
+    color: var(--color-principal);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+  
+  .nav a:hover {
+    background: #f8f9fa;
+    color: var(--color-secondaire);
+  }
+  
+  .nav a.active {
+    background: linear-gradient(135deg, var(--color-principal), var(--color-secondaire));
+    color: white;
+  }
+  
+  /* Overlay */
+  .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  /* Layout principal */
+  main {
+    padding: 0;
+    margin: 0 15px;
+    width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
+    overflow-x: hidden;
+  }
+  
+  section {
+    margin: 20px auto;
+    padding: 20px 15px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Header */
+  .header-container {
+    justify-content: space-between;
+    padding: 15px 20px;
+    overflow-x: hidden;
+  }
+  
+  .logo {
+    max-height: 50px;
+  }
+  
+  /* Hero banner */
+  .hero-banner {
+    height: 250px;
+  }
+  
+  .hero-content h1 {
+    font-size: 1.8em;
+  }
+  
+  .hero-content p {
+    font-size: 0.95em;
+  }
+  
+  /* Section "Qui sommes-nous ?" sur mobile */
+  .about-enhanced {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .about-profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    align-items: center;
+    min-width: auto;
+    margin: 0 auto;
+    padding: 20px 15px;
+  }
+  
+  .profile-image {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px auto;
+  }
+  
+  .profile-info h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.95em;
+  }
+  
+  /* Sections côte à côte sur mobile */
+  .dual-sections {
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .expertise-section, .values-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 15px;
+  }
+  
+  .expertise-item-compact, .value-item-compact {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 15px 12px;
+  }
+  
+  .expertise-icon-small, .value-icon-small {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+  }
+  
+  .expertise-icon-small i, .value-icon-small i {
+    font-size: 16px;
+  }
+  
+  .expertise-text h4, .value-text h4 {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  
+  .expertise-text p, .value-text p {
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+  
+  /* Services */
+  .services {
+    padding: 20px 15px;
+    overflow-x: hidden;
+  }
+  
+  .service-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 10px 0;
+    padding: 15px 10px;
+  }
+  
+  /* Target groups */
+  .target-group {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px 15px;
+  }
+  
+  /* CTA */
+  .cta-section {
+    padding: 20px 15px;
+    text-align: center;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  .cta-buttons .btn {
+    width: 85%;
+    max-width: 240px;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.95em;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  /* Contact */
+  .contact-item {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .contact-item i {
+    font-size: 16px;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .contact-item span {
+    font-size: 1em;
+  }
+  
+  /* Footer */
+  .footer-container {
+    padding: 18px 15px 10px 15px;
+  }
+}
+
+/* Très petits écrans (480px et moins) */
+@media (max-width: 480px) {
+  .about-profile {
+    padding: 15px 12px;
+  }
+  
+  .profile-image {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .profile-info h3 {
+    font-size: 1em;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.9em;
+  }
+  
+  .expertise-section, .values-section {
+    padding: 18px 12px;
+  }
+  
+  .expertise-item-compact, .value-item-compact {
+    padding: 12px 10px;
+  }
+  
+  .cta-section {
+    padding: 18px 12px;
+  }
+  
+  .cta-buttons .btn {
+    width: 90%;
+    max-width: 220px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+  }
+}
+
+/***** 13. STYLES SPÉCIFIQUES PAGE À PROPOS - MOBILE *****/
+/* Responsive mobile - Page À propos - CORRECTIONS */
+@media (max-width: 600px) {
+  /* Section "Qui sommes-nous ?" - adaptation mobile */
+  .about-enhanced {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .about-profile {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    align-items: center;
+    min-width: auto;
+    margin: 0 auto;
+    padding: 20px 15px;
+  }
+  
+  .profile-image {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px auto;
+  }
+  
+  .profile-image i {
+    font-size: 35px;
+  }
+  
+  .profile-info {
+    text-align: center;
+  }
+  
+  .profile-info h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  
+  .profile-subtitle {
+    font-size: 0.95em;
+  }
+  
+  /* Description adaptée mobile */
+  .about-description {
+    text-align: left;
+    margin-top: 15px;
+  }
+  
+  .about-description p {
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  
+  /* Points clés sur mobile */
+  .key-points {
+    margin-top: 15px;
+    gap: 8px;
+  }
+  
+  .key-point {
+    gap: 8px;
+    align-items: flex-start;
+  }
+  
+  .key-point i {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+  
+  .key-point span {
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+  
+  /* Sections côte à côte sur mobile */
+  .dual-sections {
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .expertise-section, .values-section {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 15px;
+    margin: 0;
+  }
+  
+  /* Items d'expertise et valeurs sur mobile */
+  .expertise-item-compact, .value-item-compact {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 15px 12px;
+  }
+  
+  .expertise-icon-small, .value-icon-small {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+  }
+  
+  .expertise-icon-small i, .value-icon-small i {
+    font-size: 16px;
+  }
+  
+  .expertise-text h4, .value-text h4 {
+    font-size: 0.95em;
+    margin-bottom: 8px;
+  }
+  
+  .expertise-text p, .value-text p {
+    font-size: 0.85em;
+    line-height: 1.4;
+  }
+  
+  /* Section CTA sur mobile */
+  .cta-section {
+    padding: 20px 15px;
+    margin: 20px auto;
+    text-align: center;
+  }
+  
+  .cta-section h2 {
+    font-size: 1.3em;
+    margin-bottom: 12px;
+  }
+  
+  .cta-section p {
+    font-size: 0.95em;
+    margin-bottom: 20px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 0;
+  }
+  
+  .cta-buttons .btn {
+    width: 85%;
+    max-width: 240px;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 12px 20px;
+    font-size: 0.95em;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  /* Titres des sections sur mobile */
+  .expertise-section h2, .values-section h2 {
+    font-size: 1.2em;
+    text-align: center;
+    margin-bottom: 18px;
   }
 }
