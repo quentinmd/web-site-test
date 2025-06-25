@@ -83,7 +83,6 @@ section {
   margin: 8px auto;
   background: var(--color-white);
   padding: 30px 35px;
-  border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
@@ -1366,7 +1365,6 @@ footer {
     margin: 8px auto;
     background: var(--color-white);
     padding: 30px 35px;
-    border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     z-index: auto;
