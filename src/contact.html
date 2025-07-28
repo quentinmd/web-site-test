@@ -9,6 +9,43 @@
     <link rel="shortcut icon" href="LOGO.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      .form-contact {
+        max-width: 500px;
+        margin: auto;
+        padding: 2em;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+
+      .champ-form {
+        margin-bottom: 1.2em;
+      }
+
+      .input-form {
+        width: 100%;
+        padding: 0.75em;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1em;
+      }
+
+      .btn-form {
+        background: #096376;
+        color: #fff;
+        font-weight: bold;
+        padding: 0.75em 2em;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn-form:hover {
+        background: #05677e;
+      }
+
+    </style>
 </head>
 <body>
     <header>
@@ -39,27 +76,48 @@
         </div>
     </section>
 
+    <form action="https://formspree.io/f/xyzpjwnp" method="POST" class="form-contact">
+  <div class="champ-form">
+    <label for="nom">Nom *</label>
+    <input type="text" id="nom" name="Nom" required class="input-form">
+  </div>
+  <div class="champ-form">
+    <label for="prenom">Prénom *</label>
+    <input type="text" id="prenom" name="Prénom" required class="input-form">
+  </div>
+  <div class="champ-form">
+    <label for="telephone">Téléphone *</label>
+    <input type="tel" id="telephone" name="Téléphone" required class="input-form">
+  </div>
+  <div class="champ-form">
+    <label for="email">E-mail *</label>
+    <input type="email" id="email" name="Email" required class="input-form">
+  </div>
+  <div class="champ-form">
+    <label for="prestation">Sélectionnez les prestations souhaitées *</label>
+    <select id="prestation" name="Prestation" required class="input-form">
+      <option value="" selected disabled>Veuillez sélectionner</option>
+      <option>Externalisation de la paie client en direct / sous-traitance pour cabinets d’expertise comptable</option>
+      <option>Administration du personnel</option>
+      <option>Contrat de travail, avenant, procédure de rupture du contrat</option>
+      <option>Audit de conformité, d’acquisition, de reprise de dossier</option>
+      <option>Accompagnement contrôle URSSAF</option>
+      <option>Accompagnement RH : CSE, obligations légales</option>
+      <option>Autre</option>
+    </select>
+  </div>
+  <div class="champ-form">
+    <label for="message">Détail de votre demande *</label>
+    <textarea id="message" name="Message" required class="input-form" placeholder="Détaillez votre besoin (nombre de bulletins à traiter, convention collective...)"></textarea>
+  </div>
+  <button type="submit" class="btn-form">Envoyer</button>
+</form>
+
+
     <!-- Calendly inline widget begin -->
     <div class="calendly-inline-widget" data-url="https://calendly.com/q-mouraud" style="min-width:320px;height:700px;"></div>
     <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
     <!-- Calendly inline widget end -->
-
-    <!-- Formulaire de demande de devis -->
-    <iframe
-      id="JotFormIFrame-251744680899373"
-      title="Demande de devis"
-      onload="window.parent.scrollTo(0,0)"
-      allowtransparency="true"
-      allow="geolocation; microphone; camera; fullscreen; payment"
-      src="https://form.jotform.com/251744680899373"
-      frameborder="0"
-      style="min-width:100%;max-width:100%;height:539px;border:none;"
-      scrolling="no"
-    >
-    </iframe>
-    <script src='https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js'></script>
-    <script>window.jotformEmbedHandler("iframe[id='JotFormIFrame-251744680899373']", "https://form.jotform.com/")</script>
-    <!-- Fin du formulaire de demande de devis -->
     <footer>
     <div class="footer-container">
         <div class="footer-logo">
